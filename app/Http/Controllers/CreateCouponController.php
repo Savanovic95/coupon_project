@@ -43,41 +43,36 @@ class CreateCouponController extends Controller
 
         ]);
 
-
-        switch ($request) { //Validation 
-            case $request->coupon_subtype == 1 && !in_array($request->value, range(5, 100)):
-                return back()->withErrors(['message' => 'You must set value between 5 and 100.']);
-            case $request->coupon_type != 2 && isset($request->limit):
-                return back()->withErrors(['message' => 'You can set limit only with multi-limit type.']);
-            case $request->coupon_type == 1 && !isset($request->email):
-                return back()->withErrors(['message' => 'You can create single cupon only with email.']);
-            case in_array($request->coupon_subtype, [1, 2]) && !isset($request->value):
-                return back()->withErrors(['message' => 'You must set the value.']);
-            case !in_array($request->coupon_type, [3, 4]) && isset($request->valid_until):
-                return back()->withErrors(['message' => 'You can set date only with single-expires or multi-expires.']);
-            case $request->coupon_subtype == 3 && isset($request->value):
-                return back()->withErrors(['message' => 'You can not set a value with free coupons.']);
-            case in_array($request->coupon_type, [3, 4]) && !isset($request->valid_until):
-                return back()->withErrors(['message' => 'You must set date of expires coupons.']);
-            case $request->coupon_type == 2 && !isset($request->limit):
-                return back()->withErrors(['message' => 'You must set limit with multi-limit coupon.']);
-            case !in_array($request->coupon_type, range(1, count(CouponType::all()))):
-                return back()->withErrors(['message' => 'You must insert valid coupon id']);
-            case !in_array($request->coupon_subtype, range(1, count(CouponSubtype::all()))):
-                return back()->withErrors(['message' => 'You msut insert vlaid subtype id']);
-            case $request->value < 1 && $request->coupon_subtype != 3:
-                return back()->withErrors(['message' => 'Value must be 1 or bigger']);
-            case $request->coupon_type == 3 && $request->valid_until < now():
-                return back()->withErrors(['message' => 'Date is not valid']);
-            case (isset($request->limit) && $request->limit < 1):
-                return back()->withErrors(['message' => 'Limit must be 1 or bigger']);
-            case !is_int($request->value) && $request->coupon_subtype != 3:
-                return back()->withErrors(['message' => 'Value must be an integer!']);
-            case $request->coupon_type == 2 && !is_int($request->limit):
-                return back()->withErrors(['status' => false, 'message' => 'Limit must be an integer!']);
-            case (isset($request->limit) && $request->limit < 1):
-                return back()->withErrors(['status' => false, 'message' => 'Limit value must be positive number.']);
+        if ($request->coupon_subtype == 1 && !in_array($request->value, range(5, 100))) {
+            return back()->withErrors(['message' => 'You must set value between 5 and 100.']);
+        } elseif ($request->coupon_type != 2 && isset($request->limit)) {
+            return back()->withErrors(['message' => 'You can set limit only with multi-limit type.']);
+        } elseif ($request->coupon_type == 1 && !isset($request->email)) {
+            return back()->withErrors(['message' => 'You can create single cupon only with email.']);
+        } elseif (in_array($request->coupon_subtype, [1, 2]) && !isset($request->value)) {
+            return back()->withErrors(['message' => 'You must set the value.']);
+        } elseif (!in_array($request->coupon_type, [3, 4]) && isset($request->valid_until)) {
+            return back()->withErrors(['message' => 'You can set date only with single-expires or multi-expires.']);
+        } elseif ($request->coupon_subtype == 3 && isset($request->value)) {
+            return back()->withErrors(['message' => 'You can not set a value with free coupons.']);
+        } elseif (in_array($request->coupon_type, [3, 4]) && !isset($request->valid_until)) {
+            return back()->withErrors(['message' => 'You must set date of expires coupons.']);
+        } elseif ($request->coupon_type == 2 && !isset($request->limit)) {
+            return back()->withErrors(['message' => 'You must set limit with multi-limit coupon.']);
+        } elseif (!in_array($request->coupon_type, range(1, count(CouponType::all())))) {
+            return back()->withErrors(['message' => 'You must insert valid coupon id']);
+        } elseif ($request->value < 1 && $request->coupon_subtype != 3) {
+            return back()->withErrors(['message' => 'Value must be 1 or bigger']);
+        } elseif ($request->coupon_type == 3 && $request->valid_until < now()) {
+            return back()->withErrors(['message' => 'Date is not valid']);
+        } elseif ((isset($request->limit) && $request->limit < 1)) {
+            return back()->withErrors(['message' => 'Limit must be 1 or bigger']);
+        } elseif (!is_int($request->value) && $request->coupon_subtype != 3) {
+            return back()->withErrors(['message' => 'Value must be an integer!']);
+        } elseif ($request->coupon_type == 2 && !is_int($request->limit)) {
+            return back()->withErrors(['message' => 'Value must be an integer!']);
         }
+
 
 
 
@@ -124,10 +119,6 @@ class CreateCouponController extends Controller
         }
 
 
-        // $newCoupon->coupon_type = $type_id;
-        // $newCoupon->coupon_subtype = $subtype_id;
-        // $newCoupon->creator_email = $email;
-
         $newCoupon->fill($request->all());
         $newCoupon->coupon_code = $random;
         $newCoupon->save();
@@ -137,8 +128,10 @@ class CreateCouponController extends Controller
             $newEmail = new Email;
             $newEmail->email = $email;
             $newEmail->save();
+
+            return redirect('/create')->with('message', ' New coupon has been created! ' . $email . ': ' . $newCoupon->coupon_code);
         }
 
-        return redirect('/create')->with('message', ' New coupon has beed created!');
+        return redirect('/create')->with('message', ' New coupon has been created! ' . $newCoupon->coupon_code);
     }
 }

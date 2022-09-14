@@ -20,42 +20,43 @@ class ApiController extends Controller
     public function store(Coupon $newCoupon, CouponRequest $request)
 
     {
-        switch ($request) { //Validation 
-            case $request->coupon_subtype == 1 && !in_array($request->value, range(5, 100)):
-                return response()->json(['status' => false, 'message' => 'You must set value between 5 and 100.']);
-            case (isset($request->email)) && (!filter_var($request->email, FILTER_VALIDATE_EMAIL)):
-                return response()->json(['status' => false, 'message' => 'You must enter valid email address.']);
-            case (isset($request->valid_until)) && $request->valid_until < date('Y-m-d'):
-                return response()->json(['status' => false, 'message' => 'You can not set expired date.']);
-            case $request->coupon_type != 2 && isset($request->limit):
-                return response()->json(['status' => false, 'message' => 'You can set limit only with multi-limit type.']);
-            case $request->coupon_type == 1 && !isset($request->email):
-                return response()->json(['status' => false, 'message' => 'You can create single cupon only with email.']);
-            case in_array($request->coupon_subtype, [1, 2]) && !isset($request->value):
-                return response()->json(['status' => false, 'message' => 'You must set the value.']);
-            case !in_array($request->coupon_type, [3, 4]) && isset($request->valid_until):
-                return response()->json(['status' => false, 'message' => 'You can set date only with single-expires or multi-expires.']);
-            case $request->coupon_subtype == 3 && isset($request->value):
-                return response()->json(['status' => false, 'message' => 'You can not set a value with free coupons.']);
-            case in_array($request->coupon_type, [3, 4]) && !isset($request->valid_until):
-                return response()->json(['status' => false, 'message' => 'You must set date of expires coupons.']);
-            case $request->coupon_type == 2 && !isset($request->limit):
-                return response()->json(['status' => false, 'message' => 'You must set limit with multi-limit coupon.']);
-            case !in_array($request->coupon_type, range(1, count(CouponType::all()))):
-                return response()->json(['status' => false, 'message' => 'You must insert valid coupon id']);
-            case !in_array($request->coupon_subtype, range(1, count(CouponSubtype::all()))):
-                return response()->json(['status' => false, 'message' => 'You msut insert vlaid subtype id']);
-            case $request->value < 1 && $request->coupon_subtype != 3:
-                return response()->json(['status' => false, 'message' => 'Value must be 1 or bigger']);
-            case $request->coupon_type == 3 && $request->valid_until < now():
-                return response()->json(['status' => false, 'message' => 'Date is not valid']);
-            case !is_int($request->value) && $request->coupon_subtype != 3:
-                return response()->json(['status' => false, 'message' => 'Value must be an integer!']);
-            case $request->coupon_type == 2 && !is_int($request->limit):
-                return response()->json(['status' => false, 'message' => 'Limit must be an integer!']);
-            case (isset($request->limit) && $request->limit < 1):
-                return response()->json(['status' => false, 'message' => 'Limit value must be positive number.']);
+        if (isset($request->value)) {
+            $request->value = intval($request->value);
         }
+        if (isset($request->limit)) {
+            $request->limit = intval($request->limit);
+        }
+
+        if ($request->coupon_subtype == 1 && !in_array($request->value, range(5, 100))) {
+            return response()->json(['status' => false, 'message' => 'You must set value between 5 and 100.']);
+        } elseif ($request->coupon_type != 2 && isset($request->limit)) {
+            return response()->json(['status' => false, 'message' => 'You can set limit only with multi-limit type.']);
+        } elseif ($request->coupon_type == 1 && !isset($request->email)) {
+            return response()->json(['status' => false, 'message' => 'You can create single cupon only with email.']);
+        } elseif (in_array($request->coupon_subtype, [1, 2]) && !isset($request->value)) {
+            return response()->json(['status' => false, 'message' => 'You must set the value.']);
+        } elseif (!in_array($request->coupon_type, [3, 4]) && isset($request->valid_until)) {
+            return response()->json(['status' => false, 'message' => 'You can set date only with single-expires or multi-expires.']);
+        } elseif ($request->coupon_subtype == 3 && isset($request->value)) {
+            return response()->json(['status' => false, 'message' => 'You can not set a value with free coupons.']);
+        } elseif (in_array($request->coupon_type, [3, 4]) && !isset($request->valid_until)) {
+            return response()->json(['status' => false, 'message' => 'You must set date of expires coupons.']);
+        } elseif ($request->coupon_type == 2 && !isset($request->limit)) {
+            return response()->json(['status' => false, 'message' => 'You must set limit with multi-limit coupon.']);
+        } elseif (!in_array($request->coupon_type, range(1, count(CouponType::all())))) {
+            return response()->json(['status' => false, 'message' => 'You must insert valid coupon id']);
+        } elseif ($request->value < 1 && $request->coupon_subtype != 3) {
+            return response()->json(['status' => false, 'message' => 'Value must be 1 or bigger']);
+        } elseif ($request->coupon_type == 3 && $request->valid_until < now()) {
+            return response()->json(['status' => false, 'message' => 'Date is not valid']);
+        } elseif ((isset($request->limit) && $request->limit < 1)) {
+            return response()->json(['status' => false, 'message' => 'Limit must be 1 or bigger']);
+        } elseif (!is_int($request->value) && $request->coupon_subtype != 3) {
+            return response()->json(['status' => false, 'message' => 'Value must be an integer!']);
+        } elseif ($request->coupon_type == 2 && !is_int($request->limit)) {
+            return response()->json(['status' => false, 'message' => 'Value must be an integer!']);
+        }
+
 
 
         while (true) {
@@ -101,9 +102,6 @@ class ApiController extends Controller
         }
 
 
-        // $newCoupon->coupon_type = $type_id;
-        // $newCoupon->coupon_subtype = $subtype_id;
-        // $newCoupon->creator_email = $email;
 
         $newCoupon->fill($request->all());
         $newCoupon->coupon_code = $random;

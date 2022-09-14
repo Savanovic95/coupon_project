@@ -5,7 +5,9 @@
     @if(session('status'))
     {{session('status')}}
     @endif
-    <center><strong><h1 class="mb-2 bold">Non Used Coupons</h1></strong></center>
+    <center><strong>
+            <h1 class="mb-2 bold">Non Used Coupons</h1>
+        </strong></center>
 
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -31,7 +33,7 @@
                 <th scope="col" class="py-3 px-6">
                     Status
                 </th>
-                
+
                 <th scope="col" class="py-3 px-6">
                     Valid untill
                 </th>
@@ -44,7 +46,7 @@
                 <th scope="col" class="py-3 px-6">
                     Action
                 </th>
-                
+
             </tr>
         </thead>
 
@@ -70,11 +72,11 @@
                 <td class="py-4 px-6">
                     {{$coupon->limit}}
                 </td>
-                
+
                 <td class="py-4 px-6">
                     {{$coupon->status}}
                 </td>
-                
+
                 <td class="py-4 px-6">
                     {{$coupon->valid_until}}
                 </td>
@@ -87,9 +89,9 @@
                 <td class="py-4 px-6">
                     @if ($coupon->status == 'active')
                     <form action="{{route('edit')}}" method="POST" class="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-2">
-                    @csrf
-                    <input type="hidden" name="id" value="{{$coupon->id}}">
-                    <button type="submit" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button>
+                        @csrf
+                        <input type="hidden" name="id" value="{{$coupon->id}}">
+                        <button type="submit" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button>
 
                     </form>
 
@@ -103,7 +105,7 @@
 
                 </td>
 
-                
+
             </tr>
         </tbody>
         @endforeach
@@ -111,6 +113,7 @@
         <p>There are no coupons</p>
         @endif
     </table>
+    {{$allCoupons->onEachSide(5)->links()}}
 </div>
 
 

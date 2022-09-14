@@ -5,67 +5,70 @@
     @if(session('status'))
     {{session('status')}}
     @endif
-    <center><strong><h1 class="mb-2 bold">Used Coupons</h1></strong></center>
+    <center><strong>
+            <h1 class="mb-2 bold">Used Coupons</h1>
+        </strong></center>
 
     <form class="input-sm" action="{{ route('filters') }}" method="post">
         @csrf
         <input type="hidden" name="view" value="coupons.used">
         <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
-                From
-              </label>
-              <input  type="date" placeholder="yyyy-mm-dd" name="used_at" class="appearance-none block w-full bg-white-200 text-gray-700 border border-black-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white " id="grid-first-name" type="text" >
-              
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                    From
+                </label>
+                <input type="date" placeholder="yyyy-mm-dd" name="used_at" class="appearance-none block w-full bg-white-200 text-gray-700 border border-black-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white " id="grid-first-name" type="text">
+
             </div>
             <div class="w-full md:w-1/2 px-3">
-              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-                To
-              </label>
-              <input  type="date" placeholder="dd-mm-yyyy" name="used_to" class="appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" >
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                    To
+                </label>
+                <input type="date" placeholder="dd-mm-yyyy" name="used_to" class="appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text">
             </div>
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
-                  Type
+                    Type
                 </label>
-                <select  id="select" name="coupon_type" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                <select id="select" name="coupon_type" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                     <option value="">Select</option>
                     <option value="1">Single</option>
                     <option value="2">Multi-limit</option>
                     <option value="3">Single-expires</option>
                     <option value="4">Multi-expires</option>
                     <option value="5">Unlimited</option>
-                  </select>
-              </div>
-              <div class="w-full md:w-1/2 px-3">
+                </select>
+            </div>
+            <div class="w-full md:w-1/2 px-3">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-                  Subtype
+                    Subtype
                 </label>
                 <select id="select" name="coupon_subtype" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                     <option value="">Select</option>
                     <option value="1">%OFF</option>
                     <option value="2">Flat</option>
                     <option value="3">1+1</option>
-                  </select>
-              </div>
-              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                </select>
+            </div>
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
-                  Value
+                    Value
                 </label>
-                <input name="value" class="appearance-none block w-full bg-white-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="number" >
-                
-              </div>
-              <div class="w-full md:w-1/2 px-3">
-                
+                <input name="value" class="appearance-none block w-full bg-white-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="number">
+
+            </div>
+            <div class="w-full md:w-1/2 px-3">
+
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
-                  Email
+                    Email
                 </label>
-                <input name="email" class="appearance-none block w-full bg-white-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="email" >
-                
-              </div>
-              
-    
-              <button type="submit" style="align-self:center; margin:10px 0 0 5px;" class=" bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded mr-4" >Filter</button>        </div>  
+                <input name="email" class="appearance-none block w-full bg-white-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="email">
+
+            </div>
+
+
+            <button type="submit" style="align-self:center; margin:10px 0 0 5px;" class=" bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded mr-4">Filter</button>
+        </div>
     </form>
 
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -95,7 +98,7 @@
                 <th scope="col" class="py-3 px-6">
                     Used at
                 </th>
-                
+
             </tr>
         </thead>
 
@@ -134,6 +137,7 @@
         <p>There are no coupons</p>
         @endif
     </table>
+    {{$allCoupons->onEachSide(5)->links()}}
 </div>
 
 

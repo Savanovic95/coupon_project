@@ -5,7 +5,9 @@
     @if(session('status'))
     {{session('status')}}
     @endif
-    <center><strong><h1 class="mb-2 bold">Active Coupons</h1></strong></center>
+    <center><strong>
+            <h1 class="mb-2 bold">Active Coupons</h1>
+        </strong></center>
 
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -46,7 +48,7 @@
                 </th>
                 <td class="py-4 px-6">
                     {{$coupon->coupon_code}}
-                </td>           
+                </td>
                 <td class="py-4 px-6">
                     {{$coupon->type_name}}
                 </td>
@@ -66,9 +68,9 @@
                 <td class="py-4 px-6">
                     @if ($coupon->status == 'active')
                     <form action="{{route('edit')}}" method="POST" class="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-2">
-                    @csrf
-                    <input type="hidden" name="id" value="{{$coupon->id}}">
-                    <button type="submit" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button>
+                        @csrf
+                        <input type="hidden" name="id" value="{{$coupon->id}}">
+                        <button type="submit" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button>
 
                     </form>
 
@@ -88,6 +90,7 @@
         <p>There are no coupons</p>
         @endif
     </table>
+    {{$allCoupons->onEachSide(5)->links()}}
 </div>
 
 

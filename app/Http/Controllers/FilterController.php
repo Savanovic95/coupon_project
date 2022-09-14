@@ -38,8 +38,8 @@ class FilterController extends Controller
         }
 
 
-        $allCoupons->when(request('used_at', false), function ($q, $used_at) {
-            return $q->where('coupon_emails.used_at', '>=', $used_at);
+        $allCoupons->when(request('used_at', false), function ($q, $used_to) {
+            return $q->where('coupon_emails.used_at', '>=', $used_to);
         });
         $allCoupons->when(request('used_to', false), function ($q, $used_to) {
             return $q->where('coupon_emails.used_at', '<=', $used_to);

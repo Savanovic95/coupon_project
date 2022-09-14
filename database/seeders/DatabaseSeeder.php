@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(CouponTypeSeeder::class);
         $this->call(CouponSubtypeSeeder::class);
+        $this->call(UserSeeder::class);
     }
 }

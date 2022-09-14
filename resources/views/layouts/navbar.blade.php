@@ -7,24 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coupon</title>
 
-    
-<style>
 
-
-    
+    <style>
         #grid {
-    
-            display:grid;
+
+            display: grid;
             grid-template-columns: repeat(3, 1fr);
-             gap: 10%;
-      
-    
+            gap: 10%;
+
+
         }
-    
+
         li {
-    
+
             list-style: none;
-    
+
         }
 
 
@@ -36,13 +33,18 @@
         }
 
 
-       .btn {
+        .btn {
 
             color: green;
             margin-right: 10px;
 
         }
-    
+
+
+        .home {
+            display: flex;
+            justify-content: space-evenly;
+        }
     </style>
 
 
@@ -69,7 +71,7 @@
         @if(Session::has('message'))
         <h4 style="color: green">{{Session::pull('message')}}</h4>
         @endif
-    
+
         <ul class="flex items-center">
             @auth
             <li>
@@ -92,7 +94,12 @@
 
         </ul>
     </nav>
+
+
+
+
     @yield('content')
+
 
 </body>
 

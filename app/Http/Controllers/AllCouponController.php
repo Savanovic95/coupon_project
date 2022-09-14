@@ -18,8 +18,10 @@ class AllCouponController extends Controller
         $allCoupons = DB::table('coupons')
             ->join('coupon_types', 'coupon_types.id', '=', 'coupons.coupon_type')
             ->join('coupon_subtypes', 'coupon_subtypes.id', '=', 'coupons.coupon_subtype')
+
             ->select('coupon_types.type_name', 'coupon_subtypes.subtype_name',  'coupons.*')
-            ->get();
+            ->orderByRaw('created_at DESC')
+            ->paginate(10);
 
         return view('coupons.all', compact('allCoupons'));
     }
@@ -32,7 +34,8 @@ class AllCouponController extends Controller
             ->join('coupon_types', 'coupon_types.id', '=', 'coupons.coupon_type')
             ->join('coupon_subtypes', 'coupon_subtypes.id', '=', 'coupons.coupon_subtype')
             ->select('coupon_types.type_name', 'coupon_subtypes.subtype_name',  'coupons.*', 'emails.*', 'coupon_emails.*')
-            ->get();
+            ->orderByRaw('used_at DESC')
+            ->paginate(10);
 
 
         //$usedCoupons = Coupon::all();
@@ -47,7 +50,8 @@ class AllCouponController extends Controller
             ->join('coupon_subtypes', 'coupon_subtypes.id', '=', 'coupons.coupon_subtype')
             ->select('coupon_types.type_name', 'coupon_subtypes.subtype_name',  'coupons.*')
             ->where('coupons.status', '=', 'active')
-            ->get();
+            ->orderByRaw('created_at DESC')
+            ->paginate(10);
         return view('coupons.active', compact('allCoupons'));
     }
 
@@ -56,7 +60,8 @@ class AllCouponController extends Controller
 
         $allCoupons = Coupon::with('type', 'subtype')
             ->where('used_times', '=', NULL)
-            ->get();
+            ->orderByRaw('created_at DESC')
+            ->paginate(10);
 
         return view('coupons.non_used', compact('allCoupons'));
     }
