@@ -9,7 +9,7 @@
     <center><strong>
             <h1 class="mb-2 bold">All Coupons</h1>
         </strong></center>
-    <form class="input-sm" action="{{ route('filters') }}" method="get">
+    <form class="input-sm" action="{{ route('filters') }}" method="post">
         @csrf
         <input type="hidden" name="view" value="coupons.all">
         <div class="flex flex-wrap -mx-3 mb-6">
@@ -206,8 +206,9 @@
         <p>There are no coupons</p>
         @endif
     </table>
-
-    {{$allCoupons->onEachSide(5)->links()}}
+    @if (isset($allCoupons))
+    {{$allCoupons->withQueryString()->links() }}
+    @endif
 
 </div>
 

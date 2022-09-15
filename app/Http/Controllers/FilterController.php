@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Coupon;
 use App\Models\Email;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +29,7 @@ class FilterController extends Controller
                 ->join('coupons', 'coupons.id', '=', 'coupon_emails.coupon_id')
                 ->join('coupon_types', 'coupon_types.id', '=', 'coupons.coupon_type')
                 ->join('coupon_subtypes', 'coupon_subtypes.id', '=', 'coupons.coupon_subtype')
+                ->where('used_times', '=', NULL)
                 ->select('coupon_types.type_name', 'coupon_subtypes.subtype_name',  'coupons.*', 'emails.*', 'coupon_emails.*');
         }
 
@@ -35,6 +37,28 @@ class FilterController extends Controller
 
             $allCoupons = DB::table('emails')
                 ->select('emails.*');
+        }
+
+        if ($request->view == 'coupons.active') {
+
+
+            $allCoupons = DB::table('coupons')
+                ->join('coupon_types', 'coupon_types.id', '=', 'coupons.coupon_type')
+                ->join('coupon_subtypes', 'coupon_subtypes.id', '=', 'coupons.coupon_subtype')
+                ->where('coupons.status', '=', 'active')
+                ->select('coupon_types.type_name', 'coupon_subtypes.subtype_name',  'coupons.*')
+                ->orderByRaw('created_at DESC');
+        }
+
+        if ($request->view == 'coupons.non_used') {
+
+
+            $allCoupons = DB::table('coupons')
+                ->join('coupon_types', 'coupon_types.id', '=', 'coupons.coupon_type')
+                ->join('coupon_subtypes', 'coupon_subtypes.id', '=', 'coupons.coupon_subtype')
+                ->where('coupons.used_times', '=', 'NULL')
+                ->select('coupon_types.type_name', 'coupon_subtypes.subtype_name',  'coupons.*')
+                ->orderByRaw('created_at DESC');
         }
 
 
@@ -76,7 +100,7 @@ class FilterController extends Controller
         });
 
 
-        $allCoupons = $allCoupons->get();
+        $allCoupons = $allCoupons->paginate(50);
 
         return view($request->view, compact('allCoupons'));
     }

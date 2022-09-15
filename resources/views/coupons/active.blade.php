@@ -9,6 +9,59 @@
             <h1 class="mb-2 bold">Active Coupons</h1>
         </strong></center>
 
+    <form class="input-sm" action="{{ route('filters') }}" method="post">
+        @csrf
+        <input type="hidden" name="view" value="coupons.active">
+        <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                    From
+                </label>
+                <input type="date" placeholder="yyyy-mm-dd" name="created_at" class="appearance-none block w-full bg-white-200 text-gray-700 border border-black-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white " id="grid-first-name" type="text">
+
+            </div>
+            <div class="w-full md:w-1/2 px-3">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                    To
+                </label>
+                <input type="date" placeholder="dd-mm-yyyy" name="created_to" class="appearance-none block w-full bg-white-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text">
+            </div>
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                    Type
+                </label>
+                <select id="select" name="coupon_type" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                    <option value="">Select</option>
+                    <option value="1">Single</option>
+                    <option value="2">Multi-limit</option>
+                    <option value="3">Single-expires</option>
+                    <option value="4">Multi-expires</option>
+                    <option value="5">Unlimited</option>
+                </select>
+            </div>
+            <div class="w-full md:w-1/2 px-3">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                    Subtype
+                </label>
+                <select id="select" name="coupon_subtype" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                    <option value="">Select</option>
+                    <option value="1">%OFF</option>
+                    <option value="2">Flat</option>
+                    <option value="3">1+1</option>
+                </select>
+            </div>
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                    Creator email
+                </label>
+                <input name="creator_email" class="appearance-none block w-full bg-white-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="email">
+
+            </div>
+
+            <button type="submit" style="align-self:center; margin:10px 0 0 5px;" class=" bg-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded mr-4">Filter</button>
+        </div>
+    </form>
+
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>

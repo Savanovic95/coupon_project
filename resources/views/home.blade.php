@@ -1,51 +1,81 @@
 @extends('layouts.navbar')
 @section('content')
+@if(session('status'))
+{{session('status')}}
+@endif
 
 
-<div class="flex justify-center">
-    <div id="grid" class="w-6/12 bg-white p-6 rounded-lg">
-        @if(session('status'))
-        {{session('status')}}
-        @endif
+<div class="relative py-16 bg-gradient-to-br from-sky-50 to-gray-200">
+    <div class="relative container m-auto px-6 text-gray-500 md:px-12 xl:px-40">
+        <div class="m-auto md:w-8/12 lg:w-6/12 xl:w-6/12">
+            <div class="rounded-xl bg-white shadow-xl">
+                <div class="p-6 sm:p-16">
+                    <div class="space-y-4">
 
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400  ">
-            <tr>
+                        <center>
+                            <h2 class="mb-8 text-2xl text-cyan-900 font-bold">Coupon Project CMS</h2>
+                        </center>
+                    </div>
+                    <div class="mt-16 grid space-y-4">
+                        <button class="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 
+ hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
+                            <div class="relative flex items-center space-x-4 justify-center">
+                                <a href="{{route('create')}}">
+                                    <span class="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">Create new coupon</span>
+                                </a>
+                            </div>
+                        </button>
+                        <button class="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 
+ hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
+                            <div class="relative flex items-center space-x-4 justify-center">
 
-                <li class="mb-4">
-                    <th scope="col" class="py-3 px-6 ">
-                        <a href="{{route('create')}}" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Create Coupon</a>
-                    </th>
-                </li>
-                <li class="mb-4">
-                    <th scope="col" class="py-3 px-6">
-                        <a href="{{route('all')}}" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Show all coupon's</a>
-                    </th>
-                </li>
-                <li class="mb-4">
-                    <th scope="col" class="py-3 px-6">
-                        <a href="{{route('used')}}" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Show used coupon's</a>
-                    </th>
-                </li>
-                <li class="mb-4">
-                    <th scope="col" class="py-3 px-6">
-                        <a href="{{route('active')}}" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Show active coupon's</a>
-                    </th>
-                </li>
-                <li class="mb-4">
-                    <th scope="col" class="py-3 px-6">
-                        <a href="{{route('non_used')}}" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Show Non-used coupon's</a>
-                    </th>
-                </li>
-                <li class="mb-4">
-                    <th scope="col" class="py-3 px-6">
-                        <a href="{{route('emails')}}" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Email's</a>
-                    </th>
-                </li>
+                                <a href="{{route('all')}}">
+                                    <span class="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">Show all coupon's</span>
+                                </a>
+                            </div>
+                        </button>
+                        <button class="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 
+                                     hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
+                            <div class="relative flex items-center space-x-4 justify-center">
 
-            </tr>
-        </thead>
+                                <a href="{{route('used')}}">
+                                    <span class="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">Show used coupon's</span>
+                                </a>
+                            </div>
+                        </button>
+                        <button class="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 
+                                     hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
+                            <div class="relative flex items-center space-x-4 justify-center">
+
+                                <a href="{{route('active')}}">
+                                    <span class="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">Show active coupon's</span>
+                                </a>
+                            </div>
+                        </button>
+                        <button class="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 
+                                     hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
+                            <div class="relative flex items-center space-x-4 justify-center">
+
+                                <a href="{{route('non_used')}}">
+                                    <span class="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">Show non used coupon's</span>
+                                </a>
+                            </div>
+                        </button>
+                        <button class="group h-12 px-6 border-2 border-gray-300 rounded-full transition duration-300 
+                                     hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100">
+                            <div class="relative flex items-center space-x-4 justify-center">
+
+                                <a href="{{route('emails')}}">
+                                    <span class="block w-max font-semibold tracking-wide text-gray-700 text-sm transition duration-300 group-hover:text-blue-600 sm:text-base">Show all email's</span>
+                                </a>
+                            </div>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
 
 @endsection

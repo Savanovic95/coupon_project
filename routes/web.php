@@ -46,5 +46,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/edit', [EditDeleteController::class, 'edit'])->name('edit');
     Route::post('/store', [EditDeleteController::class, 'store'])->name('store');
 
-    Route::get('/filter', [FilterController::class, 'filters'])->name('filters');
+    Route::any('/filter', [FilterController::class, 'filters'])->name('filters');
 });

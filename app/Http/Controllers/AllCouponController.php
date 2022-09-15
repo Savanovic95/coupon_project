@@ -33,12 +33,12 @@ class AllCouponController extends Controller
             ->join('coupons', 'coupons.id', '=', 'coupon_emails.coupon_id')
             ->join('coupon_types', 'coupon_types.id', '=', 'coupons.coupon_type')
             ->join('coupon_subtypes', 'coupon_subtypes.id', '=', 'coupons.coupon_subtype')
+            ->where('used_times', '!=', 'NULL')
             ->select('coupon_types.type_name', 'coupon_subtypes.subtype_name',  'coupons.*', 'emails.*', 'coupon_emails.*')
-            ->orderByRaw('used_at DESC')
+            ->orderByRaw('coupons.used_at DESC')
             ->paginate(10);
 
 
-        //$usedCoupons = Coupon::all();
 
         return view('coupons.used', compact('allCoupons'));
     }

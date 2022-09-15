@@ -137,7 +137,7 @@
         <p>There are no coupons</p>
         @endif
     </table>
-    {{$allCoupons->onEachSide(5)->links()}}
+    {{$allCoupons->links()}}
 </div>
 
 
