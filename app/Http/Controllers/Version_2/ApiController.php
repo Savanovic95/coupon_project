@@ -44,7 +44,9 @@ class ApiController extends Controller
         } elseif ($request->coupon_type == 2 && !isset($request->limit)) {
             return response()->json(['status' => false, 'message' => 'You must set limit with multi-limit coupon.']);
         } elseif (!in_array($request->coupon_type, range(1, count(CouponType::all())))) {
-            return response()->json(['status' => false, 'message' => 'You must insert valid coupon id']);
+            return response()->json(['status' => false, 'message' => 'You must insert valid coupon type id']);
+        } elseif (!in_array($request->coupon_subtype, range(1, count(CouponSubtype::all())))) {
+            return response()->json(['status' => false, 'message' => 'You must insert valid coupon subtype id']);
         } elseif ($request->value < 1 && $request->coupon_subtype != 3) {
             return response()->json(['status' => false, 'message' => 'Value must be 1 or bigger']);
         } elseif ($request->coupon_type == 3 && $request->valid_until < now()) {

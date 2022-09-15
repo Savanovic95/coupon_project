@@ -8,7 +8,6 @@ use App\Models\Coupon;
 use App\Models\CouponType;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\CouponPattern;
 use App\Models\CouponSubtype;
 
 class CreateCouponController extends Controller
@@ -61,6 +60,8 @@ class CreateCouponController extends Controller
             return back()->withErrors(['message' => 'You must set limit with multi-limit coupon.']);
         } elseif (!in_array($request->coupon_type, range(1, count(CouponType::all())))) {
             return back()->withErrors(['message' => 'You must insert valid coupon id']);
+        } elseif (!in_array($request->coupon_subtype, range(1, count(CouponSubtype::all())))) {
+            return back()->withErrors(['message' => 'You must insert valid coupon subtype id']);
         } elseif ($request->value < 1 && $request->coupon_subtype != 3) {
             return back()->withErrors(['message' => 'Value must be 1 or bigger']);
         } elseif ($request->coupon_type == 3 && $request->valid_until < now()) {
